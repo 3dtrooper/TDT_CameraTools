@@ -10,7 +10,7 @@ Features
 - Create a Camera Rig that is centered around the currently selected Object
 - Animate the current object to Viewport and then to target
 - Create New Camera From Viewport for Arnold, VRAY, Corona, Scanline, FStorm
-- Lense Presets [21mm, 24mm, 35mm, 50mm, 85mm, 105mm]
+- Lense Presets [21mm, 24mm, 35mm, 50mm, 85mm, 105mm] for Camera and Viewport
 - Aspect Presets [16:9, 1.85:1, 2.35:1, 1:1, 0.675:1]
 - Animation: Adds a new animation Layer: Noise Controller/ Rotation Controller, Animation Layer 360°, Aim Camera Target At Selected
 - Set Render Resolution
