@@ -24,6 +24,10 @@ Version History
 
 -- V 0.8 the key range is shown if the camera is animated, bug fixes (camera focus), octane support
 
+Installation
+
+-- The script is now a macro script, just drag and drop the .mcr-file onto the viewport
+
 A quick preview of some of the functions:
 
 ![Preview](https://github.com/3dtrooper/TDT_CameraTools/blob/master/TDT_CamTools.gif "Preview")
