@@ -21,6 +21,7 @@ Features
     Right Click: Go To Former View
 
 Version History
+
 -- V 0.8 the key range is shown if the camera is animated, bug fixes (camera focus), octane support
 
 A quick preview of some of the functions:
