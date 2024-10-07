@@ -3,6 +3,7 @@
 -- V 0.6 UI update
 -- V 0.7 fixes
 -- V 0.8 the key range is shown if the camera is animated, bug fixes (camera focus), octane support
+-- V 0.9 new sorting function to make the focus more reliable, bug fixes
 
 try(cui.UnRegisterDialogBar CamTools)catch()   
 if CamTools != undefined then (destroyDialog CamTools)      
@@ -144,6 +145,34 @@ rollout CamTools "Camera Tools" width:160 height:775
 			names = rendType as string
 			vrayrender = matchPattern names pattern:"*V_Ray*"
 			)
+	fn sortObjectsByDistance baseObject objectArray =
+	(
+		local distanceArray = #()
+		local sortedObjectArray = objectArray
+
+		for obj in objectArray do
+		(
+			dist = distance baseObject obj
+			append distanceArray dist
+		)
+		for i = 1 to distanceArray.count-1 do --bubble sort
+		(
+			for j = 1 to distanceArray.count-i do
+			(
+				if distanceArray[j] > distanceArray[j+1] then
+				(
+					tempDist = distanceArray[j]
+					distanceArray[j] = distanceArray[j+1]
+					distanceArray[j+1] = tempDist
+					
+					tempObj = sortedObjectArray[j]
+					sortedObjectArray[j] = sortedObjectArray[j+1]
+					sortedObjectArray[j+1] = tempObj
+				)
+			)
+		)
+		return sortedObjectArray
+	)
 	fn FocusCam  = 
 		(
 			offset = spn_offset.value 
@@ -176,14 +205,23 @@ rollout CamTools "Camera Tools" width:160 height:775
 									wasPhyFree = true
 								)
 						)
+	
 				viewRay = cam as ray
-				firstObj = intersectRayScene viewRay
+				hitObjs = intersectRayScene viewRay
 						
-				if firstObj[1] == undefined then
+				firstValues = #() 
+				for j = 1 to hitObjs.count do --get nodes
+					(
+						append firstValues hitObjs[j][1]
+					)
+					
+				sortedObjects = sortObjectsByDistance cam firstValues --distance		
+						
+				if sortedObjects[1] == undefined then
 					(print "no hit")
 					else
 					(
-					surfacePoint = intersectRay firstObj[1][1] viewRay
+					surfacePoint = intersectRay sortedObjects[1] viewRay -- sortedObjects[1][1]
 					if selPos == undefined then
 					(
 						focusdistval = (distance viewPos (surfacePoint.pos)) 
@@ -232,9 +270,11 @@ rollout CamTools "Camera Tools" width:160 height:775
 						cam.target_distance = withOffset
 						)
 					else if cam.specify_focus == on and cam.targeted == on then (
+-- 						cam.targeted = on
 						cam.focus_distance = withOffset
 						)
 					else if cam.targeted == off then (
+						cam.targeted = on
 						cam.specify_focus = on
 						cam.focus_distance = withOffset
 						)	
@@ -265,8 +305,7 @@ rollout CamTools "Camera Tools" width:160 height:775
 					)	
 				)
 			)
-		completeredraw()	
-		NameObj = firstObj[1] 		
+		completeredraw()		
 		FnSceneInfo()					
 		)
 	)
@@ -326,6 +365,8 @@ rollout CamTools "Camera Tools" width:160 height:775
 		sorted = sort largest
 		returnvalue = sorted[3]
 	)
+	
+	
 	---------------------------------------------------- Buttons-----------------------------------------
 	
 	on CamTools open do
