@@ -23,6 +23,7 @@ Features
 Version History
 
 -- V 0.8 the key range is shown if the camera is animated, bug fixes (camera focus), octane support
+-- V 0.9 new sorting function to make the focus more reliable, bug fixes
 
 Installation
 
@@ -30,4 +31,5 @@ Installation
 
 A quick preview of some of the functions:
 
-![Preview](https://github.com/3dtrooper/TDT_CameraTools/blob/master/TDT_CamTools.gif "Preview")
+![Preview](https://github.com/3dtrooper/TDT_CameraTools/blob/master/Cam%20Tools%20Focus.gif "Preview")
+
